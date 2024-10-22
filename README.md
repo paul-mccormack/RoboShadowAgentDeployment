@@ -14,4 +14,8 @@ This is all great for a few servers or to your users workstations. What if you w
 
 # Az PowerShell and the VM Run Command
 
-This was quite an easy task I have done many times using the Az PowerShell modules.  We get all the Windows based servers in a subscription, store that in a variable then loop through them with the [Invoke-AzVMRunCommand](https://learn.microsoft.com/en-us/powershell/module/az.compute/invoke-azvmruncommand?view=azps-12.4.0).  Super quick and easy.  The script to do this can be found [here](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/RoboShadowAzureBulkAgentInstall.ps1)
+This was quite an easy task I have done many times using the Az PowerShell modules.  We get all the Windows based servers in a subscription, store that in a variable then loop through them with the [Invoke-AzVMRunCommand](https://learn.microsoft.com/en-us/powershell/module/az.compute/invoke-azvmruncommand?view=azps-12.4.0) executing the PowerShell code block provided by RoboShadow.  Super quick and easy.  The script to do this can be found [here](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/RoboShadowAzureBulkAgentInstall.ps1)
+
+After a period of monitoring we decided it was time to deploy to everything, but how do you do that when you have hundreds of Windows server spread across Azure and on premise and you want to make sure it is automatically deployed to newly created Windows server?
+
+# Azure Machine Configuration and Azure Arc

@@ -4,7 +4,7 @@
 
 #Powershell script to run
 $scriptBlock = {
-    $organisationId = "3a86c72c-1611-4b72-b68f-15e3f829f792"
+    $organisationId = "YOUR ORGANISATION ID"
     $haveSetOrgId = $True
 
     $version = (Get-ItemProperty -Path "HKLM:\SOFTWARE\RoboShadowLtd\Rubicon\Agent" -Name "Version" -ErrorAction SilentlyContinue).$valueName
