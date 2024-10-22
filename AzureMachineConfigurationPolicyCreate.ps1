@@ -4,7 +4,7 @@
 
 $dscConfigName = "deployRoboShadow" #this should match the name of the configuration in the DSC config script
 $version = "1.0.0" # must be x.y.z format.  If updating an existing config and policy check the portal for the existing version
-$packageName = "RoboShadow"  # This should match the filename of DSC config script
+$packageName = "RoboShadowDsc"  # This should match the filename of DSC config script
 $configMode = "AuditAndSet" # must be Audit or AuditAndSet
 $storageAccountName = "machineconfiguksmgt"
 $containerName = "artifacts"
@@ -13,6 +13,7 @@ $secretName = "machineConfigSaKey"
 $policyDisplayName = "Install RoboShadow Agent"
 $policyDescription = "Installs RoboShadow Agent onto Windows VM's using Machine Configuration"
 $policyDeploymentScope = "MG-SCC-Common" #This would usually be the top level Management Group
+
 # Check if required modules are installed
 if(-not (Get-Module GuestConfiguration -ListAvailable)){
     Install-Module -Name GuestConfiguration
