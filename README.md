@@ -1,5 +1,5 @@
 
-# RoboShadow Agent Deployment on Windows Azure VM's and Hybrid Connected VM's at scale
+# RoboShadow agent aeployment on Windows Azure VM's and hybrid connected VM's at scale
 
 # Introduction
 
@@ -9,7 +9,7 @@ RoboShadow provides an installable agent for monitoring your devices. This is ve
 
 This is all great for a few servers or to your users workstations. What if you want to deploy to all your Windows based servers?  That was what I had to do and I didn't want to logon to a few hundred devices and run the install manually.  The first batch was around 20 test servers to make sure the agent didn't have any adverse effects, which it did not.  These test servers were all in Azure and running in the same subscription.  The next section details how I did this
 
-# Az PowerShell and the VM Run Command
+# Az PowerShell and the VM run command
 
 This was quite an easy task I have done many times using the Az PowerShell modules.  We get all the Windows based servers in a subscription, store that in a variable then loop through them with the [Invoke-AzVMRunCommand](https://learn.microsoft.com/en-us/powershell/module/az.compute/invoke-azvmruncommand?view=azps-12.4.0) executing the PowerShell code block provided by RoboShadow.  Super quick and easy.  The script to do this can be found [here](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/RoboShadowAzureBulkAgentInstall.ps1)
 
@@ -21,3 +21,12 @@ After a period of monitoring we decided it was time to deploy to everything, but
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/DSC_Resources.jpg)
 
+# Setting up the authoring environment
+
+To get started you will need the latest version of [Powershell 7](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.4) Installed.  You will then need to install the GuestConfiguration, PSDesiredStateConfiguration and Azure modules.  The following code will do this:
+
+```
+Install-Module -Name GuestConfiguration -Repository PSGallery
+Install-Module -Name PSDesiredStateConfiguration -Repository PSGallery
+Install-Module -Name Az -Repository PSGallery
+```
