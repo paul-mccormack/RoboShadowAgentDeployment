@@ -85,9 +85,41 @@ This will produce a zip file containing your configuration and all the PowerShel
 
 ## Upload the package to Azure Storage and generate the access token
 
-We now have our package and it is ready to upload to a storage account.  I'm not going to go into the process of creating a storage account, blob container and generating a blob SAS token here.  There is lot of information available online about accomplishing this. My resuable script assumes you already have the storage account and container available but it will upload the configuration zip file and generate a blob level SAS token with a three year expiration.  Don't forget to set a reminder!
+We now have our package and it is ready to upload to a storage account.  I'm not going to go into the process of creating a storage account, blob container and generating a blob SAS token here.  There is lot of information available online about accomplishing this.
+
+If you are generating the blob uri and SAS token manually in the portal don't forget to save it before closing the blade.  You will not be able to retreive it afterwards and will need to generate a new one.
+
+My resuable script assumes you already have the storage account and container available but it will upload the configuration zip file and generate a blob level uri and SAS token with a three year expiration.  Don't forget to set a reminder!
 
 ## Generate a Machine Configuration Azure policy definition
+
+We are now ready to generate the policy definition. First we need to setup a variable containing the parameters we need to create the definition.  The following code shows an example
+
+```PowerShell
+$blobUri = "<Your blob uri and sas token"
+
+#Generate a new GUID for policy id
+$guid = (New-Guid).Guid
+
+#Generate policy definition
+$policyParameters = @{
+    DisplayName = "Install RoboShadow Agent"
+    Description = "Installs RoboShadow Agent onto Windows servers using Machine Configuration"
+    PolicyId = $guid
+    Path = './policies/'
+    ContentUri = $blobUri
+    PolicyVersion = "1.0.0"
+    Platform = "Windows"
+    Mode = "ApplyAndAutoCorrect"
+}
+```
+With that in place we can now generate the policy definition using the following command
+
+```Powershell
+New-GuestConfigurationPolicy @policyParameters
+```
+This command will create a subfolder in your working directory named policies and within a json policy definition file suitable for deploying to Azure.
+
 
 
 ## Publish the policy definition to Azure
