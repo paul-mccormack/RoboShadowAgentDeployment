@@ -34,12 +34,12 @@ Now that is done we can get started.
 
 The workflow is as follows:
 
-[Create a custom machine configuration package](#creating-a-custom-machine-configuration-package)
-[Upload the package to an Azure Storage account and generate a blob SAS token](#upload-the-package-to-azure-storage-and-generate-the-access-token)
-[Generate a Machine Configuration Azure policy definition](#generate-a-machine-configuration-azure-policy-definition)
-[Publish the policy definition to Azure](#publish-the-policy-definition-to-azure)
-[Assign the policy](#assign-the-policy)
-[Create a remediation task to apply to existing resources](#create-a-remediation-task-to-apply-to-existing-resources)
+- [Create a custom machine configuration package](#creating-a-custom-machine-configuration-package)
+- [Upload the package to an Azure Storage account and generate a blob SAS token](#upload-the-package-to-azure-storage-and-generate-the-access-token)
+- [Generate a Machine Configuration Azure policy definition](#generate-a-machine-configuration-azure-policy-definition)
+- [Publish the policy definition to Azure](#publish-the-policy-definition-to-azure)
+- [Assign the policy](#assign-the-policy)
+- [Create a remediation task to apply to existing resources](#create-a-remediation-task-to-apply-to-existing-resources)
 
 
 ## Creating a custom machine configuration package
