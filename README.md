@@ -81,10 +81,11 @@ New-GuestConfigurationPackage -Name 'RoboShadowAgentDeploy' -Configuration './de
 ```
 This will produce a zip file containing your configuration and all the PowerShell modules required for the target machine to be able to apply the configuration.  The -Type parameter has two options 'Audit' or 'AuditAndSet'.  Audit will check if a condition is as defined by the congiuration and AuditAndSet will check then correct if the condtion is not as desired.  The -Version parameter expects a version number in x.y.z format.  You cannot use 1.x.x as that is reserved for Azure Internal policies.
 
-![alt text]
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/machine_config_package.jpg)
 
 ## Upload the package to Azure Storage and generate the access token
 
+We now have our package and it is ready to upload to a storage account.
 
 ## Generate a Machine Configuration Azure policy definition
 
