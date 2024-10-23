@@ -120,7 +120,7 @@ New-GuestConfigurationPolicy @policyParameters
 ```
 This command will create a subfolder in your working directory named policies and within a json policy definition file suitable for deploying to Azure.
 
-
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/new_guest_configuration_policy.jpg)
 
 ## Publish the policy definition to Azure
 
