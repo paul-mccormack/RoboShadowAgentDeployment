@@ -23,7 +23,7 @@ After a period of monitoring we decided it was time to deploy to everything, but
 
 I am going to be using Azure Machine Configuration to deploy the RoboShadow agent to all the Windows server based machines in our environment, both in Azure and on premise via [Azure Arc](https://learn.microsoft.com/en-us/azure/azure-arc/overview).  This will not only enable us easily deploy the agent with miminal administrative overhead and easily check for any failures but also ensure any machines created in the future will get the agent automatically upon deployment.
 
-In the interest of code reusability I intend to create a script that can easily be repurposed in the future to mass deploy an msi based software package.
+In the interest of code reusability I intend to create a script that can easily be repurposed in the future to mass deploy an msi based software package.  This script will perform steps 1 to 4 listed below.  I've left steps 5 and 6 out of the automation as there is a lot of flexilbity around where you want to assign a policy.  It could be at the Management Group scope, a Subscription scope or a Resource Group scope.  I've assumed the policy definition would be deployed at a Management Group scope as that makes the most sense to me.  Also creating a remediation task to apply the policy has been left to manual intervention as really you want to go through a change control process before doing that.  This way you can have everything ready in a published policy before going through change control.
 
 The workflow is as follows:
 
@@ -47,7 +47,29 @@ Now that is done we can get started.
 
 ## Creating a custom machine configuration package
 
-I found it easier
+The first step is to create a DSC Configuration PowerShell Script.  Different providers will have different requirements for this script.  The PSDscResources module provides a funtions for installing an MSI package, among loads of other useful abilities.  The expample code below would create a custom machine configuration package to install PowerShell 7
+
+```PowerShell
+Configuration powershell7 {
+    Import-DscResource -ModuleName 'PSDscResources' -ModuleVersion 2.12.0.0
+
+    Node localhost {
+        MsiPackage PowerShell7MsiPackage {
+            Path      = 'https://github.com/PowerShell/PowerShell/releases/download/v7.4.5/PowerShell-7.4.5-win-x64.msi'
+            ProductId = '{C1593F76-F694-448E-AD35-82DDD6203975}'
+            Ensure    = 'Present'
+        }
+    }
+}
+
+powershell7
+```
+You need the Product ID of the package you are installing.  You can either get that from the registry of a machine with the package already installed in HKEY_LOCAL_MACHINE\SOFTWARE\.  If you already have the msi downloaded you could use this handy [Get-MsiProductCode](https://www.powershellgallery.com/packages/Get-MsiProductCode/1.0) script from the PowerShell Gallery.
+
+My configuration script to deploy the RoboShadow agent is available [here](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/RoboShadowDsc.ps1)
+
+Run this script in a PowerShell 7 session and it will create a subfoler with the name of your configuration containing a file called localhost.mof
+
 
 ## Upload the package to Azure Storage and generate the access token
 
