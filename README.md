@@ -72,6 +72,17 @@ Run this script in a PowerShell 7 session and it will create a subfoler with the
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/machine_config_output.jpg)
 
+The mof file contains the information realted to your configuration.  Rename the file to something more descriptive than localhost.  I prefer to rename it to the same as the powershell script that produced it.  So I will rename it to RoboShadowDsc.mof.
+
+With this mof file you can then create the package.  The following command will take care of that
+
+```PowerShell
+New-GuestConfigurationPackage -Name 'RoboShadowAgentDeploy' -Configuration './deployRoboShadow/RoboShadowDsc.mof' -Type 'AuditAndSet' -Version "1.0.0"
+```
+This will produce a zip file containing your configuration and all the PowerShell modules required for the target machine to be able to apply the configuration.  The -Type parameter has two options 'Audit' or 'AuditAndSet'.  Audit will check if a condition is as defined by the congiuration and AuditAndSet will check then correct if the condtion is not as desired.  The -Version parameter expects a version number in x.y.z format.  You cannot use 1.x.x as that is reserved for Azure Internal policies.
+
+![alt text]
+
 ## Upload the package to Azure Storage and generate the access token
 
 
