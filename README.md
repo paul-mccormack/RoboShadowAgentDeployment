@@ -23,7 +23,7 @@ After a period of monitoring we decided it was time to deploy to everything, but
 
 I am going to be using Azure Machine Configuration to deploy the RoboShadow agent to all the Windows server based machines in our environment, both in Azure and on premise via [Azure Arc](https://learn.microsoft.com/en-us/azure/azure-arc/overview).  This will not only enable us easily deploy the agent with miminal administrative overhead and easily check for any failures but also ensure any machines created in the future will get the agent automatically upon deployment.
 
-In the interest of code reusability I intend to create a script that can easily be repurposed in the future to mass deploy an msi based software package.  This script will perform steps 1 to 4 listed below.  I've left steps 5 and 6 out of the automation as there is a lot of flexilbity around where you want to assign a policy.  It could be at the Management Group scope, a Subscription scope or a Resource Group scope.  I've assumed the policy definition would be deployed at a Management Group scope as that makes the most sense to me.  Also creating a remediation task to apply the policy has been left to manual intervention as really you want to go through a change control process before doing that.  This way you can have everything ready in a published policy before going through change control.
+In the interest of code reusability I intend to create a script that can easily be repurposed in the future to mass deploy an msi based software package.  This script will perform steps 1 to 4 listed below.  I've left steps 5 and 6 out of the automation as there is a lot of flexilbity around where you want to assign a policy.  It could be at the Management Group scope, a Subscription scope or a Resource Group scope.  I've assumed the policy definition would be deployed at a Management Group scope as that makes the most sense to me.  Also creating a remediation task to apply the policy has been left to manual intervention as really you want to go through a change control process before doing that.  This way you can have everything ready in a published policy before going through change control.  The script is located [here](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/AzureMachineConfigurationPolicyCreate.ps1).  The rest of this guide explains the step by step commands the script is running.
 
 The workflow is as follows:
 
@@ -124,7 +124,16 @@ This command will create a subfolder in your working directory named policies an
 
 ## Publish the policy definition to Azure
 
+Finally we are in a position where we are ready to deploy a policy definition.  Ensure your PowerShell session is logged into Azure.  If you are deploying to a Management Group scope, which to me it always makes sense to do with something like policies, then it doesn't matter which subscription you are focued on.  If you are deploying the definition to a Subscription scope you will need to make sure that subscription is your focus.
 
+The command to deploy the the policy definition is shown below
+
+```Powershell
+New-AzPolicyDefinition -Name $policyParameters.PolicyId -ManagementGroupName <YOUR MANAGEMENT GROUP ID> -Policy .\policies\RoboShadowAgentDeploy_DeployIfNotExists.json
+```
+Running it will show the new policy definition has been successfuly deployed.
+
+![alt text]()
 ## Assign the policy
 
 
