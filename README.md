@@ -133,7 +133,14 @@ New-AzPolicyDefinition -Name $policyParameters.PolicyId -ManagementGroupName <YO
 ```
 Running it will show the new policy definition has been successfuly deployed.
 
-![alt text]()
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/deployed_policy_definition.jpg)
+
+If we now login to the Azure portal and navigate to the Azure Policy blade we can verify the new definition is as expected.
+
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_in_portal.jpg)
+
+As I explained earlier my script stops at this point and the next two steps are manual in the portal.  They could definitely be automated with just a couple of PowerShell commands adding to the script if you know the assignment scope and want to proceed straight into a remediation task.  The commands to use would be [New-AzPolicyAssignment](https://learn.microsoft.com/en-us/powershell/module/az.resources/new-azpolicyassignment?view=azps-12.4.0) and [Start-AzPolicyRemediation](https://learn.microsoft.com/en-us/powershell/module/az.policyinsights/start-azpolicyremediation?view=azps-12.4.0)
+
 ## Assign the policy
 
 
