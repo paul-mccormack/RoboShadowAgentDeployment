@@ -85,7 +85,7 @@ This will produce a zip file containing your configuration and all the PowerShel
 
 ## Upload the package to Azure Storage and generate the access token
 
-We now have our package and it is ready to upload to a storage account.
+We now have our package and it is ready to upload to a storage account.  I'm not going to go into the process of creating a storage account, blob container and generating a blob SAS token here.  There is lot of information available online about accomplishing this. My resuable script assumes you already have the storage account and container available but it will upload the configuration zip file and generate a blob level SAS token with a three year expiration.  Don't forget to set a reminder!
 
 ## Generate a Machine Configuration Azure policy definition
 
