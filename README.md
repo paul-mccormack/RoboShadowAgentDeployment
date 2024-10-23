@@ -1,5 +1,5 @@
 
-# RoboShadow agent aeployment on Windows Azure VM's and hybrid connected VM's at scale
+# RoboShadow agent deployment on Windows Azure VM's and hybrid connected VM's at scale
 
 ## Introduction
 
