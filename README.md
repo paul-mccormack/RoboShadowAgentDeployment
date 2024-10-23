@@ -70,6 +70,7 @@ My configuration script to deploy the RoboShadow agent is available [here](https
 
 Run this script in a PowerShell 7 session and it will create a subfoler with the name of your configuration containing a file called localhost.mof
 
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/machine_config_output.jpg)
 
 ## Upload the package to Azure Storage and generate the access token
 
