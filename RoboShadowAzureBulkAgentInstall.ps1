@@ -19,7 +19,7 @@ $script = [scriptblock]::create($scriptBlock)
 #Get all fully provisioned Windows VM's
 $VmResources = Get-AzVm | Where-Object {$_.StorageProfile.OsDisk.OsType -eq "Windows" -and $_.ProvisioningState -eq "Succeeded"}
 
-#Install RoboShadow Agent onto each running Windows based VM discovered
+#Install RoboShadow Agent onto each running Windows based VM
 foreach($VmResource in $VmResources)
 {
     Invoke-AzVMRunCommand -ResourceGroupName $VmResource.ResourceGroupName -VMName $VmResource.Name -CommandId 'RunPowerShellScript' -ScriptString $script

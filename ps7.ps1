@@ -1,14 +1,13 @@
-Configuration deployRoboCop {
+Configuration powershell7 {
     Import-DscResource -ModuleName 'PSDscResources' -ModuleVersion 2.12.0.0
 
     Node localhost {
-        MsiPackage RoboShadowAgentMsiPackage {
-            Path      = 'https://cdn.roboshadow.com/GetAgent/RoboShadowAgent-x64.msi'
-            ProductId = '{DD2C070F-CBDD-4CF4-9816-E5A73F97BF84}'
-            Arguments = '/qb /norestart ORGANISATION_ID=3a86c72c-1611-4b72-b68f-15e3f829f792'
+        MsiPackage PowerShell7MsiPackage {
+            Path      = 'https://github.com/PowerShell/PowerShell/releases/download/v7.4.5/PowerShell-7.4.5-win-x64.msi'
+            ProductId = '{C1593F76-F694-448E-AD35-82DDD6203975}'
             Ensure    = 'Present'
         }
     }
 }
 
-deployRoboCop
+powershell7

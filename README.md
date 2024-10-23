@@ -21,6 +21,19 @@ After a period of monitoring we decided it was time to deploy to everything, but
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/DSC_Resources.jpg)
 
+I am going to be using Azure Machine Configuration to deploy the RoboShadow agent to all the Windows server based machines in our environment, both in Azure and on premise via [Azure Arc](https://learn.microsoft.com/en-us/azure/azure-arc/overview).  This will not only enable us easily deploy the agent with miminal administrative overhead and easily check for any failures but also ensure any machines created in the future will get the agent automatically upon deployment.
+
+In the interest of code reusability I intend to create a script that can easily be repurposed in the future to mass deploy an msi based software package.
+
+The workflow is as follows:
+
+- [Create a custom machine configuration package](#creating-a-custom-machine-configuration-package)
+- [Upload the package to an Azure Storage account and generate a blob SAS token](#upload-the-package-to-azure-storage-and-generate-the-access-token)
+- [Generate a Machine Configuration Azure policy definition](#generate-a-machine-configuration-azure-policy-definition)
+- [Publish the policy definition to Azure](#publish-the-policy-definition-to-azure)
+- [Assign the policy](#assign-the-policy)
+- [Create a remediation task to apply to existing resources](#create-a-remediation-task-to-apply-to-existing-resources)
+
 ## Setting up the authoring environment
 
 To get started you will need the latest version of [Powershell 7](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.4) Installed.  You will then need to install the GuestConfiguration, PSDesiredStateConfiguration and Azure modules.  The following code will do this:
@@ -32,18 +45,9 @@ Install-Module -Name Az -Repository PSGallery
 ```
 Now that is done we can get started.
 
-The workflow is as follows:
-
-- [Create a custom machine configuration package](#creating-a-custom-machine-configuration-package)
-- [Upload the package to an Azure Storage account and generate a blob SAS token](#upload-the-package-to-azure-storage-and-generate-the-access-token)
-- [Generate a Machine Configuration Azure policy definition](#generate-a-machine-configuration-azure-policy-definition)
-- [Publish the policy definition to Azure](#publish-the-policy-definition-to-azure)
-- [Assign the policy](#assign-the-policy)
-- [Create a remediation task to apply to existing resources](#create-a-remediation-task-to-apply-to-existing-resources)
-
-
 ## Creating a custom machine configuration package
 
+I found it easier
 
 ## Upload the package to Azure Storage and generate the access token
 
