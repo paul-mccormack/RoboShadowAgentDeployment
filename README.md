@@ -25,8 +25,38 @@ After a period of monitoring we decided it was time to deploy to everything, but
 
 To get started you will need the latest version of [Powershell 7](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.4) Installed.  You will then need to install the GuestConfiguration, PSDesiredStateConfiguration and Azure modules.  The following code will do this:
 
-```
+```Powershell
 Install-Module -Name GuestConfiguration -Repository PSGallery
 Install-Module -Name PSDesiredStateConfiguration -Repository PSGallery
 Install-Module -Name Az -Repository PSGallery
 ```
+Now that is done we can get started.
+
+The workflow is as follows:
+
+[Create a custom machine configuration package](creating-a-custom-machine-configuration-package)
+Upload the package to an Azure Storage account and generate a blob SAS token
+Generate a Machine Configuration Azure policy definition
+Publish the policy definition to Azure
+Assign the policy
+Create a remediation task to apply to existing resources
+
+
+# Creating a custom machine configuration package
+
+
+# Upload the package to Azure Storage and generate the access token
+
+
+# Generate Generate a Machine Configuration Azure policy definition
+
+
+# Publish the policy definition to Azure
+
+
+# Assign the policy
+
+
+# Create a remediation task to apply to existing resources
+
+
