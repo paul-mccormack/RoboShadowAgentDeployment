@@ -172,7 +172,13 @@ The final configuration option is to set a non-compliance message.
 
 With the assignment created we can then check the compliance of the resources.  Click the "View compliance" button on the assignment.
 
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/compliance.jpg)
 
+This page shows us a lot of information, most importantly that our resource is not compliant and the last time it was evaluated by the service.  It isn't compliant because I chose not to create a remediation task at the time of the assignment.  I'll do that next.  If any new resources were created within the scope of the assignment after the assignment is in place they would be remediated automatically.
+
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/compliance_details.jpg)
+
+Going into the compliance details view will show the non-compliance message that was configured during the assignment.  This is very useful going forward to give people a better chance of figuring out why an Azure policy might be non-compliant on some resources and how to bring them into compliance.
 
 ## Create a remediation task to apply to existing resources
 
