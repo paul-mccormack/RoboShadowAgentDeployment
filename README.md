@@ -170,6 +170,8 @@ Here you can create a remediation task at the same time as the assignment.  This
 
 The final configuration option is to set a non-compliance message.
 
+With the assignment created we can then check the compliance of the resources.  Click the "View compliance" button on the assignment.
+
 
 
 ## Create a remediation task to apply to existing resources
