@@ -194,3 +194,6 @@ The last section is very much a waiting game.  From my experience it can take ar
 
 You can go to the policy assignment page, click on "Remediation" and it will show as complete.  This is a bit misleading.  The remediation task deployment has completed but the Local Configuration Manager on the Windows Machine hasn't checked in, picked up the task and performed it.
 
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/remediation_complete_but_not.jpg)
+
+The policy compliance page is the best place to check.
