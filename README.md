@@ -148,6 +148,8 @@ The script is located [here](https://github.com/paul-mccormack/RoboShadowAgentDe
 
 Assigning the policy definition in the portal is very simple.  Click the "Assign policy" button on the definition to get into the wizard.
 
+test
+
 ## Create a remediation task to apply to existing resources
 
 
