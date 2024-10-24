@@ -184,6 +184,13 @@ Going into the compliance details view will show the non-compliance message that
 
 On the policy complaince page click the "Create remediation task" button.
 
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/remediation_task.jpg)
 
+There is not much to do here other than set a failure threshold, limit the resource count and choose to re-evaluate the resources before remediating.  A word about resource applicable view.  In the example above there is only one resource within the assignment scope as can be seen in the screenshot.  If you have made the assignment at a higher scope like Management Group or Subscription you are unlikely to see them on this screen.
 
 ## Monitoring remediation
+
+The last section is very much a waiting game.  From my experience it can take around an hour before the software has been installed.
+
+You can go to the policy assignment page, click on "Remediation" and it will show as complete.  This is a bit misleading.  The remediation task deployment has completed but the Local Configuration Manager on the Windows Machine hasn't checked in, picked up the task and performed it.
+
