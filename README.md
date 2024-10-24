@@ -154,7 +154,23 @@ The script is located [here](https://github.com/paul-mccormack/RoboShadowAgentDe
 
 Assigning the policy definition in the portal is very simple.  Click the "Assign policy" button on the definition to get into the wizard.
 
-![alt text]
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_basics.jpg)
+
+Here you can choose the scope where you want to create the assignment.  I am assigning it to a resource group containing a test vm.  You can also choose to exclude resources that would be within the scope if needed.
+
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_parameters.jpg)
+
+The next section allows you to configure any parameters that are included within the definition.
+
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_remediation.jpg)
+
+Here you can create a remediation task at the same time as the assignment.  This policy is a "deployIfNotExists" type.  This means it needs to perform some actions to correct a non-compliant resource, hence the requirement for a managed identity and role assignment.  It's usually best to leave these as system assigned.  Azure will then handle the life of the identity.  If you delete the assignment, the identity goes with it.
+
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_non-compliance.jpg)
+
+The final configuration option is to set a non-compliance message.
+
+
 
 ## Create a remediation task to apply to existing resources
 
