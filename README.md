@@ -178,9 +178,12 @@ This page shows us a lot of information, most importantly that our resource is n
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/compliance_details.jpg)
 
-Going into the compliance details view will show the non-compliance message that was configured during the assignment.  This is very useful going forward to give people a better chance of figuring out why an Azure policy might be non-compliant on some resources and how to bring them into compliance.
+Going into the compliance details view will show the non-compliance message that was configured during the assignment.  This is very useful going forward to give people a better chance of determining why an Azure policy might be non-compliant on some resources and how to bring them into compliance.
 
 ## Create a remediation task to apply to existing resources
+
+On the policy complaince page click the "Create remediation task" button.
+
 
 
 ## Monitoring remediation
