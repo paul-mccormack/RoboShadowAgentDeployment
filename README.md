@@ -17,7 +17,13 @@ After a period of monitoring we decided it was time to deploy to everything, but
 
 ## Azure Machine Configuration
 
-[Azure Machine Configuration](https://learn.microsoft.com/en-us/azure/governance/machine-configuration/), previously named Azure Policy Guest Configuration provides the ability to both audit and configure operating system settings and installed software, both for machines running in Azure and hybrid Arc-enabled machines running on premise or other public clouds.  You can use this feature directly on a per machine basis or orchestrate at scale using Azure Policy.  Azure Machine Configuration relies on [PowerShell Desired State Configuration](https://learn.microsoft.com/en-us/powershell/scripting/dsc/overview?view=powershell-7.4).  There are many providers for DSC available to acheive your goal configuration.  Go to the [PowerShell Gallery](https://www.powershellgallery.com/packages) and you can filter the results to DSC Resources
+[Azure Machine Configuration](https://learn.microsoft.com/en-us/azure/governance/machine-configuration/), previously named Azure Policy Guest Configuration provides the ability to both audit and configure operating system settings and installed software, both for machines running in Azure and hybrid Arc-enabled machines running on premise or other public clouds.  You can use this feature directly on a per machine basis or orchestrate at scale using Azure Policy.
+
+### <ins>NOTE<ins>
+
+There are some prerequisites that need to be in place before you can use Azure Machine Configuration.  Your machines must have a system assigned managed identity to allow it to authenticate to the machine configuration service and the machine configuration extension must be enabled on the VM.  Microsoft provide a built in policy initiative to take care of this for you called "Deploy prerequisites to enable Guest Configuration policies on virtual machines"  Further information on this can be found [here](https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/guest-configuration). Arc-enabled machines don't require the extension as it is included in the Arc Connected Machine Agent. 
+
+Azure Machine Configuration relies on [PowerShell Desired State Configuration](https://learn.microsoft.com/en-us/powershell/scripting/dsc/overview?view=powershell-7.4).  There are many providers for DSC available to acheive your goal configuration.  Go to the [PowerShell Gallery](https://www.powershellgallery.com/packages) and you can filter the results to DSC Resources
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/DSC_Resources.jpg)
 
