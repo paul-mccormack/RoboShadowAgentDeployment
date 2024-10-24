@@ -23,7 +23,7 @@ After a period of monitoring we decided it was time to deploy to everything, but
 
 I am going to be using Azure Machine Configuration to deploy the RoboShadow agent to all the Windows server based machines in our environment, both in Azure and on premise via [Azure Arc](https://learn.microsoft.com/en-us/azure/azure-arc/overview).  This will not only enable us easily deploy the agent with miminal administrative overhead and easily check for any failures but also ensure any machines created in the future will get the agent automatically upon deployment.
 
-In the interest of code reusability I intend to create a script that can easily be repurposed in the future to mass deploy an msi based software package.  This script will perform steps 1 to 4 listed below.  I've left steps 5 and 6 out of the automation as there is a lot of flexilbity around where you want to assign a policy.  It could be at the Management Group scope, a Subscription scope or a Resource Group scope.  I've assumed the policy definition would be deployed at a Management Group scope as that makes the most sense to me.  Also creating a remediation task to apply the policy has been left to manual intervention as really you want to go through a change control process before doing that.  This way you can have everything ready in a published policy before going through change control.  The script is located [here](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/AzureMachineConfigurationPolicyCreate.ps1).  The rest of this guide explains the step by step commands the script is running.
+In the interest of code reusability I intend to create a script that can easily be repurposed to mass deploy any msi based software package.  This script will perform steps 1 to 4 listed below.  I've left steps 5 and 6 out of the automation as there is a lot of flexilbity around where you want to assign a policy.  It could be at the Management Group scope, a Subscription scope or a Resource Group scope.  I've assumed the policy definition would be deployed at a Management Group scope as that makes the most sense to me.  Also creating a remediation task to apply the policy has been left to manual intervention as really you want to go through a change control process before doing that.  This way you can have everything ready in a published policy before going through change control.  The rest of this guide explains the step by step commands the script is running and I'll introduce the resuable script once we get to the end of step 4.
 
 The workflow is as follows:
 
@@ -89,7 +89,7 @@ We now have our package and it is ready to upload to a storage account.  I'm not
 
 If you are generating the blob uri and SAS token manually in the portal don't forget to save it before closing the blade.  You will not be able to retreive it afterwards and will need to generate a new one.
 
-My resuable script assumes you already have the storage account and container available but it will upload the configuration zip file and generate a blob level uri and SAS token with a three year expiration.  Don't forget to set a reminder!
+My resuable script assumes you already have the storage account and container available and it will upload the configuration zip file and generate a blob level uri and SAS token with a three year expiration.  Don't forget to set a reminder!  To generate a blob level SAS token in code you need the stoage account access keys, which are used to sign the SAS token.  I have stored this in a [Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/overview) to be retrieved during deployment.  This is another component I have assumed is already created and configured.
 
 ## Generate a Machine Configuration Azure policy definition
 
@@ -135,15 +135,20 @@ Running it will show the new policy definition has been successfuly deployed.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/deployed_policy_definition.jpg)
 
-If we now login to the Azure portal and navigate to the Azure Policy blade we can verify the new definition is as expected.
+Logging into the Azure portal and navigating to the Azure Policy blade we can verify the new definition is as expected.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_in_portal.jpg)
 
-As I explained earlier my script stops at this point and the next two steps are manual in the portal.  They could definitely be automated with just a couple of PowerShell commands adding to the script if you know the assignment scope and want to proceed straight into a remediation task.  The commands to use would be [New-AzPolicyAssignment](https://learn.microsoft.com/en-us/powershell/module/az.resources/new-azpolicyassignment?view=azps-12.4.0) and [Start-AzPolicyRemediation](https://learn.microsoft.com/en-us/powershell/module/az.policyinsights/start-azpolicyremediation?view=azps-12.4.0)
+As explained earlier my script stops at this point and the next two steps are manual in the portal.  They could definitely be automated with just a couple of PowerShell commands adding to the script if you know the assignment scope and want to proceed straight into a remediation task.  The commands to use would be [New-AzPolicyAssignment](https://learn.microsoft.com/en-us/powershell/module/az.resources/new-azpolicyassignment?view=azps-12.4.0) and [Start-AzPolicyRemediation](https://learn.microsoft.com/en-us/powershell/module/az.policyinsights/start-azpolicyremediation?view=azps-12.4.0)
+
+
+The script is located [here](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/AzureMachineConfigurationPolicyCreate.ps1)
 
 ## Assign the policy
 
+Assigning the policy definition in the portal is very simple.  Click the "Assign policy" button on the definition to get into the wizard.
 
 ## Create a remediation task to apply to existing resources
 
 
+## Monitoring remediation
