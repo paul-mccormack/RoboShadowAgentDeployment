@@ -203,3 +203,4 @@ The policy compliance page is the best place to check.  Checking there after an 
 Then just as a final check I will get the status of the services on the machine.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/running_services.jpg)
+
