@@ -198,4 +198,8 @@ You can go to the policy assignment page, click on "Remediation" and it will sho
 
 The policy compliance page is the best place to check.  Checking there after an hour we can see the test machine is now showing as complaint.
 
-![alt text]()
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/compliant.jpg)
+
+Then just as a final check I will get the status of the services on the machine.
+
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/running_services.jpg)
