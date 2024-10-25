@@ -1,4 +1,7 @@
-
+#Script prepared by Paul McCormack.  This script is designed to be used in conjunction with a PowerShell DSC configuration script to setup automated deployment
+#of an MSI to Windows machines using Azure Machine Configuration orchestrated by Azure Policy
+#Instructions for use
+#Login to Azure in PowerShell using "Connect-AzAccount".  Set your context to the target subscription using Set-AzContext -SubscriptionId <your sub id> then run the script.
 
 #Setup variables
 
