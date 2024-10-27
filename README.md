@@ -23,13 +23,13 @@ After a period of monitoring we decided it was time to deploy to everything, but
 
 There are some prerequisites that need to be in place before you can use Azure Machine Configuration.  Your machines must have a system assigned managed identity to enable authentication to the machine configuration service and the machine configuration extension must be enabled on the VM.  Microsoft provide a built in policy initiative to handle this for you called "Deploy prerequisites to enable Guest Configuration policies on virtual machines"  Further information on this can be found [here](https://learn.microsoft.com/en-us/azure/virtual-machines/extensions/guest-configuration). Arc-enabled machines don't require the extension as it is included in the Arc Connected Machine Agent. 
 
-Azure Machine Configuration relies on [PowerShell Desired State Configuration](https://learn.microsoft.com/en-us/powershell/scripting/dsc/overview?view=powershell-7.4).  There are many providers for DSC available to acheive your goal configuration.  Go to the [PowerShell Gallery](https://www.powershellgallery.com/packages) and you can filter the results to DSC Resources
+Azure Machine Configuration relies on [PowerShell Desired State Configuration](https://learn.microsoft.com/en-us/powershell/scripting/dsc/overview?view=powershell-7.4).  There are many providers for DSC available to achieve your goal configuration.  Go to the [PowerShell Gallery](https://www.powershellgallery.com/packages) and you can filter the results to DSC Resources
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/DSC_Resources.jpg)
 
-I am going to be using Azure Machine Configuration to deploy the RoboShadow agent to all the Windows server based machines in our environment, both in Azure and on premise via [Azure Arc](https://learn.microsoft.com/en-us/azure/azure-arc/overview).  This will not only enable us easily deploy the agent with miminal administrative overhead and easily check for any failures but also ensure any machines created in the future will get the agent automatically upon deployment.
+I am going to be using Azure Machine Configuration to deploy the RoboShadow agent to all the Windows server based machines in our environment, both in Azure and on premise via [Azure Arc](https://learn.microsoft.com/en-us/azure/azure-arc/overview).  This will not only enable us easily deploy the agent with miminal administrative overhead and easily check for any failures using the policy compliance blade. It will also ensure any machines created in the future will get the agent automatically upon deployment.
 
-In the interest of code reusability I intend to create a script that can easily be repurposed to mass deploy any msi based software package.  This script will perform steps 1 to 4 listed below.  I've left steps 5 and 6 out of the automation as there is a lot of flexilbity around where you want to assign a policy.  It could be at the Management Group scope, a Subscription scope or a Resource Group scope.  I've assumed the policy definition would be deployed at a Management Group scope as that makes the most sense to me.  Also creating a remediation task to apply the policy has been left to manual intervention as really you want to go through a change control process before doing that.  This way you can have everything ready in a published policy before going through change control.  The rest of this guide explains the step by step commands the script is running and I'll introduce the resuable script once we get to the end of step 4.
+In the interest of code reusability I intend to create a script that can easily be repurposed to mass deploy any msi based software package.  This script will perform steps 1 to 4 listed below.  I've left steps 5 and 6 out of the automation as there is a lot of flexilbity around where you can assign a policy.  It could be done at the Management Group scope, a Subscription scope or a Resource Group scope.  I've assumed the policy definition would be deployed at a Management Group scope as that makes the most sense to me.  Also creating a remediation task to apply the policy has been left to manual intervention as really you want to go through a change control process before doing that.  This way you can have everything ready in a published and assigned policy before going through change control.  The rest of this guide explains the step by step commands the script is running and I'll introduce the resuable script once we get to the end of step 4.
 
 The workflow is as follows:
 
@@ -42,7 +42,7 @@ The workflow is as follows:
 
 ## Setting up the authoring environment
 
-To get started you will need the latest version of [Powershell 7](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.4) Installed.  You will then need to install the GuestConfiguration, PSDesiredStateConfiguration and Azure modules.  The following code will do this:
+To get started you will need the latest version of [Powershell 7](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.4) Installed.  You will then need to install the GuestConfiguration, PSDesiredStateConfiguration and Azure modules.  The following commands will do this:
 
 ```Powershell
 Install-Module -Name GuestConfiguration -Repository PSGallery
@@ -53,7 +53,7 @@ Now that is done we can get started.
 
 ## Creating a custom machine configuration package
 
-The first step is to create a DSC Configuration PowerShell Script.  Different providers will have different requirements for this script.  The PSDscResources module provides a funtions for installing an MSI package, among loads of other useful abilities.  The expample code below would create a custom machine configuration package to install PowerShell 7
+The first step is to create a DSC Configuration PowerShell Script.  Different providers will have different requirements for this script.  The PSDscResources module provides a funtion for installing an MSI package.  The example code below would create a custom machine configuration package to install PowerShell 7.
 
 ```PowerShell
 Configuration powershell7 {
@@ -70,17 +70,17 @@ Configuration powershell7 {
 
 powershell7
 ```
-You need the Product ID of the package you are installing.  You can either get that from the registry of a machine with the package already installed in HKEY_LOCAL_MACHINE\SOFTWARE\.  If you already have the msi downloaded you could use this handy [Get-MsiProductCode](https://www.powershellgallery.com/packages/Get-MsiProductCode/1.0) script from the PowerShell Gallery.
+You need the Product ID of the package you are installing.  You can either get that from the registry of a machine with the package already installed in HKEY_LOCAL_MACHINE\SOFTWARE\.  If you already have the msi downloaded you could use the [Get-MsiProductCode](https://www.powershellgallery.com/packages/Get-MsiProductCode/1.0) script from the PowerShell Gallery.
 
-My configuration script to deploy the RoboShadow agent is available [here](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/RoboShadowDsc.ps1)
+My configuration script to deploy the RoboShadow agent is included: [RoboShadowDsc.ps1](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/RoboShadowDsc.ps1)
 
-Run this script in a PowerShell 7 session and it will create a subfoler with the name of your configuration containing a file called localhost.mof
+Run this script in a PowerShell 7 session and it will create a subfolder named the same as your configuration containing a file called localhost.mof
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/machine_config_output.jpg)
 
-The mof file contains the information realted to your configuration.  Rename the file to something more descriptive than localhost.  I prefer to rename it to the same as the powershell script that produced it.  So I will rename it to RoboShadowDsc.mof.
+The mof file contains the information related to your configuration.  Rename the file to something more descriptive than localhost.  I prefer to rename it to the same as the powershell script that produced it.  So I will rename it to RoboShadowDsc.mof.
 
-With this mof file you can then create the package.  The following command will take care of that
+With this mof file you can then create the package.  The following command will do that.
 
 ```PowerShell
 New-GuestConfigurationPackage -Name 'RoboShadowAgentDeploy' -Configuration './deployRoboShadow/RoboShadowDsc.mof' -Type 'AuditAndSet' -Version "1.0.0"
@@ -91,11 +91,11 @@ This will produce a zip file containing your configuration and all the PowerShel
 
 ## Upload the package to Azure Storage and generate the access token
 
-We now have our package and it is ready to upload to a storage account.  I'm not going to go into the process of creating a storage account, blob container and generating a blob SAS token here.  There is lot of information available online about accomplishing this.
+We now have our package and it is ready to upload to a storage account.  I'm not going to go into the process of creating a storage account, blob container and generating a SAS token here.  There is lot of information available online about accomplishing this.
 
 If you are generating the blob uri and SAS token manually in the portal don't forget to save it before closing the blade.  You will not be able to retreive it afterwards and will need to generate a new one.
 
-My resuable script assumes you already have the storage account and container available and it will upload the configuration zip file and generate a blob level uri and SAS token with a three year expiration.  Don't forget to set a reminder!  To generate a blob level SAS token in code you need the stoage account access keys, which are used to sign the SAS token.  I have stored this in a [Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/overview) to be retrieved during deployment.  This is another component I have assumed is already created and configured.
+My resuable script assumes you already have the storage account and container available and will upload the configuration zip file then generate the URI and SAS token with a three year expiration.  Don't forget to set a reminder!  To generate a SAS token in code you need the stoage account access keys, which are used to sign the SAS token.  I have stored this in a [Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/overview) to be retrieved during deployment.  This is the best way to ensure we aren't exposing any secrets in code and is another component I have already created and configured.
 
 ## Generate a Machine Configuration Azure policy definition
 
