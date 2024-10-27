@@ -145,10 +145,10 @@ Logging into the Azure portal and navigating to the policy blade we can verify t
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_in_portal.jpg)
 
-As explained earlier my script stops at this point and the next two steps are manual in the portal.  They could definitely be automated with just a couple of PowerShell commands adding to the script if you know the assignment scope and want to proceed straight into a remediation task.  The commands to use would be [New-AzPolicyAssignment](https://learn.microsoft.com/en-us/powershell/module/az.resources/new-azpolicyassignment?view=azps-12.4.0) and [Start-AzPolicyRemediation](https://learn.microsoft.com/en-us/powershell/module/az.policyinsights/start-azpolicyremediation?view=azps-12.4.0)
+As explained earlier my script stops at this point and the next two steps are manual in the portal.  They could definitely be automated with just a couple of PowerShell commands adding to the script, if you know the assignment scope and want to proceed straight into a remediation task.  The commands to use would be [New-AzPolicyAssignment](https://learn.microsoft.com/en-us/powershell/module/az.resources/new-azpolicyassignment?view=azps-12.4.0) and [Start-AzPolicyRemediation](https://learn.microsoft.com/en-us/powershell/module/az.policyinsights/start-azpolicyremediation?view=azps-12.4.0)
 
 
-The script is located [here](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/AzureMachineConfigurationPolicyCreate.ps1)
+The script is included: [AzureMachineConfigurationPolicyCreate.ps1](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/AzureMachineConfigurationPolicyCreate.ps1)
 
 ## Assign the policy
 
