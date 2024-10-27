@@ -99,7 +99,7 @@ My resuable script assumes you already have the storage account and container av
 
 ## Generate a Machine Configuration Azure policy definition
 
-We are now ready to generate the policy definition. First we need to setup a variable containing the parameters we need to create the definition.  The following code shows an example
+We are now ready to generate the policy definition. First we need to setup the parameters we need to create the definition.  The following code this.
 
 ```PowerShell
 $blobUri = "<Your blob uri and sas token"
@@ -124,7 +124,7 @@ With that in place we can now generate the policy definition using the following
 ```Powershell
 New-GuestConfigurationPolicy @policyParameters
 ```
-This command will create a subfolder in your working directory named policies and within a json policy definition file suitable for deploying to Azure.
+This command will create a subfolder in your working directory named policies containing a json policy definition file suitable for deploying to Azure.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/new_guest_configuration_policy.jpg)
 
