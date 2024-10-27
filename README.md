@@ -141,7 +141,7 @@ Running it will show the new policy definition has been successfuly deployed.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/deployed_policy_definition.jpg)
 
-Logging into the Azure portal and navigating to the Azure Policy blade we can verify the new definition is as expected.
+Logging into the Azure portal and navigating to the policy blade we can verify the new definition is as expected.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_in_portal.jpg)
 
