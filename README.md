@@ -130,7 +130,7 @@ This command will create a subfolder in your working directory named policies co
 
 ## Publish the policy definition to Azure
 
-Finally we are in a position where we are ready to deploy a policy definition.  Ensure your PowerShell session is logged into Azure.  If you are deploying to a Management Group scope, which to me it always makes sense to do with something like policies, then it doesn't matter which subscription you are focued on.  If you are deploying the definition to a Subscription scope you will need to make sure that subscription is your focus.
+Finally we are in a position where we are ready to deploy a policy definition.  Ensure your PowerShell session is logged into Azure.  If you are deploying to a Management Group scope, which to me it always makes sense to do with something like policies, then it doesn't matter which subscription you are focused on.  If you are deploying the definition to a Subscription scope you will need to make sure that subscription is your focus.
 
 The command to deploy the the policy definition is shown below
 
