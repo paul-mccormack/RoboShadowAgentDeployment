@@ -156,7 +156,7 @@ Assigning the policy definition in the portal is very simple.  Click the "Assign
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_basics.jpg)
 
-Here you can choose the scope where you want to create the assignment.  I am assigning it to a resource group containing a test vm.  You can also choose to exclude resources that would be within the scope if needed.
+Here you can choose the scope where you want to create the assignment.  I am assigning it to a resource group containing a test vm.  You can also choose to exclude resources that would be within the scope if required.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_parameters.jpg)
 
