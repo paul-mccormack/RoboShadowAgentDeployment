@@ -162,7 +162,7 @@ The next section allows you to configure any parameters that are included within
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_parameters.jpg)
 
-The next page enables you to create a remediation task at the same time as the assignment.  This policy is a "deployIfNotExists" type.  This means it needs to perform some actions to correct a non-compliant resource, hence the requirement for a managed identity and role assignment.  It's usually best to leave these as system assigned.  Azure will then handle the life of the identity.  If you delete the assignment, the identity goes with it.
+The next page enables you to create a remediation task at the same time as the assignment.  This policy is a "deployIfNotExists" type.  So it needs to perform some actions to correct a non-compliant resource, hence the requirement for a managed identity and role assignment.  It's usually best to leave these as system assigned.  Azure will then handle the life of the identity.  If you delete the assignment, the identity goes with it.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_remediation.jpg)
 
