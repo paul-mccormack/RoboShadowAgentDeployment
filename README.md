@@ -95,11 +95,11 @@ We now have our package and it is ready to upload to a storage account.  I'm not
 
 If you are generating the blob uri and SAS token manually in the portal don't forget to save it before closing the blade.  You will not be able to retreive it afterwards and will need to generate a new one.
 
-My resuable script assumes you already have the storage account and container available and will upload the configuration zip file then generate the URI and SAS token with a three year expiration.  Don't forget to set a reminder!  To generate a SAS token in code you need the stoage account access keys, which are used to sign the SAS token.  I have stored this in a [Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/overview) to be retrieved during deployment.  This is the best way to ensure we aren't exposing any secrets in code and is another component I have already created and configured.
+My resuable script assumes you already have the storage account and container available and will upload the configuration zip file then generate the URI and SAS token with a three year expiration.  Don't forget to set a reminder!  To generate a SAS token in code you need the storage account access keys, which are used to sign the SAS token.  I have stored this in a [Key Vault](https://learn.microsoft.com/en-us/azure/key-vault/general/overview) to be retrieved during deployment.  This is the best way to ensure we aren't exposing any secrets in code and is another component I have already created and configured.
 
 ## Generate a Machine Configuration Azure policy definition
 
-We are now ready to generate the policy definition. First we need to setup the parameters we need to create the definition.  The following code this.
+We are now ready to generate the policy definition. First we need to setup the parameters we need to create the definition.  The following code will do that.
 
 ```PowerShell
 $blobUri = "<Your blob uri and sas token"
@@ -119,18 +119,18 @@ $policyParameters = @{
     Mode = "ApplyAndAutoCorrect"
 }
 ```
-With that in place we can now generate the policy definition using the following command
+Now generate the policy definition using the following command.
 
 ```Powershell
 New-GuestConfigurationPolicy @policyParameters
 ```
-This command will create a subfolder in your working directory named policies containing a json policy definition file suitable for deploying to Azure.
+You should now have a subfolder in your working directory named policies containing a json policy definition file suitable for deploying to Azure.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/new_guest_configuration_policy.jpg)
 
 ## Publish the policy definition to Azure
 
-Finally we are in a position where we are ready to deploy a policy definition.  Ensure your PowerShell session is logged into Azure.  If you are deploying to a Management Group scope, which to me it always makes sense to do with something like policies, then it doesn't matter which subscription you are focused on.  If you are deploying the definition to a Subscription scope you will need to make sure that subscription is your focus.
+Finally we are in a position to deploy a policy definition.  Ensure your PowerShell session is logged into Azure.  If you are deploying to a management group scope, which to me it always makes sense to do when dealing with policies, it doesn't matter which subscription you are focused on.  If you are deploying the definition to a subscription or resource group scope you will need to make sure that subscription is your focus.
 
 The command to deploy the the policy definition is shown below
 
@@ -141,7 +141,7 @@ Running it will show the new policy definition has been successfuly deployed.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/deployed_policy_definition.jpg)
 
-Logging into the Azure portal and navigating to the policy blade we can verify the new definition is as expected.
+Log into the Azure portal, navigate to the policy blade and we can verify the new definition is as expected.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_in_portal.jpg)
 
@@ -154,21 +154,21 @@ The script is included: [AzureMachineConfigurationPolicyCreate.ps1](https://gith
 
 Assigning the policy definition in the portal is very simple.  Click the "Assign policy" button on the definition to get into the wizard.
 
-![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_basics.jpg)
-
 Here you can choose the scope where you want to create the assignment.  I am assigning it to a resource group containing a test vm.  You can also choose to exclude resources that would be within the scope if required.
 
-![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_parameters.jpg)
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_basics.jpg)
 
 The next section allows you to configure any parameters that are included within the definition.
 
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_parameters.jpg)
+
+The next page enables you to create a remediation task at the same time as the assignment.  This policy is a "deployIfNotExists" type.  This means it needs to perform some actions to correct a non-compliant resource, hence the requirement for a managed identity and role assignment.  It's usually best to leave these as system assigned.  Azure will then handle the life of the identity.  If you delete the assignment, the identity goes with it.
+
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_remediation.jpg)
 
-Here you can create a remediation task at the same time as the assignment.  This policy is a "deployIfNotExists" type.  This means it needs to perform some actions to correct a non-compliant resource, hence the requirement for a managed identity and role assignment.  It's usually best to leave these as system assigned.  Azure will then handle the life of the identity.  If you delete the assignment, the identity goes with it.
+The final configuration option is to set a non-compliance message.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/policy_assignment_non-compliance.jpg)
-
-The final configuration option is to set a non-compliance message.
 
 With the assignment created we can then check the compliance of the resources.  Click the "View compliance" button on the assignment.
 
@@ -176,9 +176,9 @@ With the assignment created we can then check the compliance of the resources.  
 
 This page shows us a lot of information, most importantly that our resource is not compliant and the last time it was evaluated by the service.  It isn't compliant because I chose not to create a remediation task at the time of the assignment.  I'll do that next.  If any new resources were created within the scope of the assignment after the assignment is in place they would be remediated automatically.
 
-![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/compliance_details.jpg)
-
 Going into the compliance details view will show the non-compliance message that was configured during the assignment.  This is very useful going forward to give people a better chance of determining why an Azure policy might be non-compliant on some resources and how to bring them into compliance.
+
+![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/compliance_details.jpg)
 
 ## Create a remediation task to apply to existing resources
 
