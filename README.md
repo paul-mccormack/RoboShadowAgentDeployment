@@ -182,7 +182,7 @@ Going into the compliance details view will show the non-compliance message that
 
 ## Create a remediation task to apply to existing resources
 
-On the policy complaince page click the "Create remediation task" button.
+On the policy compliance page click the "Create remediation task" button.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/remediation_task.jpg)
 
@@ -204,3 +204,6 @@ Then just as a final check I will get the status of the services on the machine.
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/running_services.jpg)
 
+That's the agent successfuly installed on one test server using Azure Machine Configuration and Desired State Configuration.  To push this configuration out to all the Windows based servers I need to assign the policy at the top level management group then wait for it to do the work.  Any failures will show up in the policy compliance view and can be investigated and resolved.  Any new machines deployed into Azure will get remediated upon deployment and any new on premise machine that are registered into Azure Arc will also have the agent installed.
+
+So in summary, Azure Machine Confiuration is hugely powerful tool.  Given the range of configuration options available within Desired State Configuration the amount you can automate and easily track is wide and varied.  Combine that with Arc and you've got a great hybrid cloud management tool.
