@@ -27,7 +27,7 @@ Azure Machine Configuration relies on [PowerShell Desired State Configuration](h
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/DSC_Resources.jpg)
 
-I am going to be using Azure Machine Configuration to deploy the RoboShadow agent to all the Windows server based machines in our environment, both in Azure and on premise via [Azure Arc](https://learn.microsoft.com/en-us/azure/azure-arc/overview).  This will not only enable us easily deploy the agent with miminal administrative overhead and easily check for any failures using the policy compliance blade. It will also ensure any machines created in the future will get the agent automatically upon deployment.
+I am going to be using Azure Machine Configuration to deploy the RoboShadow agent to all the Windows server based machines in my environment, both in Azure and on premise via [Azure Arc](https://learn.microsoft.com/en-us/azure/azure-arc/overview).  This will not only enable us easily deploy the agent with miminal administrative overhead and easily check for any failures using the policy compliance blade. It will also ensure any machines created in the future will get the agent automatically upon deployment.
 
 In the interest of code reusability I intend to create a script that can easily be repurposed to mass deploy any msi based software package.  This script will perform steps 1 to 4 listed below.  I've left steps 5 and 6 out of the automation as there is a lot of flexilbity around where you can assign a policy.  It could be done at the Management Group scope, a Subscription scope or a Resource Group scope.  I've assumed the policy definition would be deployed at a Management Group scope as that makes the most sense to me.  Also creating a remediation task to apply the policy has been left to manual intervention as really you want to go through a change control process before doing that.  This way you can have everything ready in a published and assigned policy before going through change control.  The rest of this guide explains the step by step commands the script is running and I'll introduce the resuable script once we get to the end of step 4.
 
@@ -91,7 +91,7 @@ This will produce a zip file containing your configuration and all the PowerShel
 
 ## Upload the package to Azure Storage and generate the access token
 
-We now have our package and it is ready to upload to a storage account.  I'm not going to go into the process of creating a storage account, blob container and generating a SAS token here.  There is lot of information available online about accomplishing this.
+We now have the configuration package and it is ready to upload to a storage account.  I'm not going to go into the process of creating a storage account, blob container and generating a SAS token here.  There is lot of information available online about accomplishing this.
 
 If you are generating the blob uri and SAS token manually in the portal don't forget to save it before closing the blade.  You will not be able to retreive it afterwards and will need to generate a new one.
 
@@ -174,7 +174,7 @@ With the assignment created we can then check the compliance of the resources.  
 
 ![alt text](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/images/compliance.jpg)
 
-This page shows us a lot of information, most importantly that our resource is not compliant and the last time it was evaluated by the service.  It isn't compliant because I chose not to create a remediation task at the time of the assignment.  I'll do that next.  If any new resources were created within the scope of the assignment after the assignment is in place they would be remediated automatically.
+This page shows us a lot of information, most importantly that the resource is not compliant and the last time it was evaluated by the service.  It isn't compliant because I chose not to create a remediation task at the time of the assignment.  I'll do that next.  If any new resources were created within the scope of the assignment after the assignment is in place they would be remediated automatically.
 
 Going into the compliance details view will show the non-compliance message that was configured during the assignment.  This is very useful going forward to give people a better chance of determining why an Azure policy might be non-compliant on some resources and how to bring them into compliance.
 
