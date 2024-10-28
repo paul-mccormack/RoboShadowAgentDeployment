@@ -1,5 +1,5 @@
 # Script prepared by Paul McCormack.  This script is designed to be used in conjunction with a PowerShell DSC configuration script to setup automated deployment
-# of an MSI to Windows machines using Azure Machine Configuration orchestrated by Azure Policy.
+# of a MSI to Windows based virtual machines using Azure Machine Configuration orchestrated by Azure Policy.
 #
 # The script assumes you already have a storage account for hosting the configuration file and a KeyVault containing the storage account access key.
 # Setup your dsc script first.  This script will run it.
