@@ -7,7 +7,7 @@ RoboShadow is a cloud hosted cyber security platform offering external vulnerabi
 
 RoboShadow provides an installable agent for monitoring your devices. This can be installed using the downloadable msi file, a PowerShell script provided by RoboShadow, which I have included in this script: [RoboShadowAgentInstall.ps1](https://github.com/paul-mccormack/RoboShadowAgentDeployment/blob/main/RoboShadowAgentInstall.ps1). If you have Microsoft Intune within your organisation and you need to deploy to your workstations you can utilise the "Deploy RoboShadow With Intune" functionality once you have the integration set-up.  Detailed guidance is available in their [documentation](https://roboshadow.atlassian.net/wiki/spaces/Roboshadow/overview?homepageId=4882647)
 
-This is fine for a few servers or to your users workstations. What if you want to deploy to all your Windows based servers?  That was what I had to do and I didn't want to logon to a few hundred devices and run the install manually.  The first batch was around 20 test servers to make sure the agent didn't have any adverse effects, which it did not.  These test servers were all in Azure and running in the same subscription.  The next section details how I did this
+This is fine for a few servers or to your users workstations. What if you want to deploy to all your Windows based servers?  That was what I had to do and I didn't want to logon to a few hundred machines to run the install manually.  The first batch was around 20 test servers to make sure the agent didn't have any adverse effects, which it did not.  These test servers were all in Azure and running in the same subscription.  The next section details how I did this
 
 ## Az PowerShell and the VM run command
 
